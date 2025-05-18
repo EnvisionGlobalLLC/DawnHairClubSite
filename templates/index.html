@@ -1,235 +1,732 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HairUnit Studio</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
     }
     .hero {
-      background-image: url('/static/images/hero.jpg');
-      background-size: cover;
-      background-position: center;
+      background: url('/static/images/hero.jpg') no-repeat center center/cover;
       height: 100vh;
+      color: white;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
       text-align: center;
-      position: relative;
     }
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.25rem;
-    }
-    .btn-dark {
-      background-color: #111;
-      border: none;
-      padding: 10px 25px;
-      font-size: 1.1rem;
-    }
-    .about-img {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .icon-box {
-      text-align: center;
-      padding: 20px;
-    }
-    .icon-box img {
-      width: 150px;
-      height: 150px;
-      margin-bottom: 10px;
-    }
-    .icon-box p {
-      margin-top: 5px;
-      font-weight: 500;
-    }
-    .service-image {
-      border-radius: 10px;
-      margin-bottom: 10px;
-      transition: transform 0.3s;
-    }
-    .service-image:hover {
-      transform: scale(1.05);
-    }
-    .section-title {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
     .navbar {
-      position: absolute;
+      background-color: transparent;
+      position: fixed;
       top: 0;
       width: 100%;
-      background: transparent !important;
-      z-index: 10;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
     }
-    .navbar .nav-link {
-      color: white !important;
-      font-weight: 500;
+    .navbar.scrolled {
+      background-color: #111 !important;
     }
-    .navbar .navbar-brand {
-      color: white !important;
+    .navbar-collapse.show {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 15px;
+      border-radius: 8px;
     }
+    .section {
+      padding: 80px 0;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .testimonial {
+      background-color: #f9f9f9;
+      border-left: 6px solid #2c4b43;
+      padding: 20px;
+      border-radius: 10px;
+      height: 100%;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s ease;
+    }
+    footer {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .hover-shadow:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.hover-shadow:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  transition: all 0.3s ease;
+}
+
+
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">HAIRUNIT STUDIO</a>
+      <a class="navbar-brand d-flex align-items-center" href="#">
+  <img src="/static/images/logo/Dawn_Logo.png" alt="HairUnit Studio Logo" style="height: 80px; margin-right: 10px;">
+  <span class="fw-bold text-white"></span>
+</a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('gallery') }}">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('services') }}">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('book') }}">Book Now</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-        </ul>        
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1>CONFIDENCE STARTS HERE</h1>
-    <p>Non-Surgical Hair Units for Men & Women</p>
-    <a href="#" class="btn btn-dark mt-3">BOOK YOUR CONSULTATION</a>
-  </div>
-
-  <!-- About Section -->
-  <div class="container my-5">
-    <div class="row align-items-center">
-      <div class="col-md-5">
-        <img src="/static/images/about.jpg" class="about-img" alt="About">
-      </div>
-      <div class="col-md-7">
-        <h3 class="section-title">About</h3>
-        <p>
-          We specialize in high-quality, natural-looking hair units for men and women experiencing hair thinning, alopecia, or baldness.
-          Our expert stylists customize every installation for comfort, durability, and style.
-        </p>
-        <div class="row text-center mt-4">
-          <div class="col icon-box">
-            <img src="/static/images/icons/mens.png" alt="Men">
-            <p>Men's Hair Units</p>
-          </div>
-          <div class="col icon-box">
-            <img src="/static/images/icons/womens.png" alt="Women">
-            <p>Women's Hair Integration</p>
-          </div>
-          <div class="col icon-box">
-            <img src="/static/images/icons/scalp.png" alt="Scalp">
-            <p>Scalp Prep & Aftercare</p>
-          </div>
-          <div class="col icon-box">
-            <img src="/static/images/icons/maintenance.png" alt="Maintenance">
-            <p>Hair System Maintenance</p>
-          </div>
-        </div>
-      </div>
+  <header class="hero">
+    <div>
+      <h1 class="display-4 fw-bold">Confidence Starts Here</h1>
+      <p class="lead">Premium Non-Surgical Hair Units</p>
+      <a href="#contact" class="btn btn-light btn-lg mt-3">Get In Touch</a>
     </div>
-  </div>
+  </header>
 
-  <!-- Services Section -->
-  <div class="container text-center my-5">
-    <h3 class="section-title">Services</h3>
-    <div class="row row-cols-2 row-cols-md-4 g-4 mt-3">
-      <div class="col">
-        <img src="/static/images/service1.jpg" class="service-image img-fluid" alt="Service 1">
-      </div>
-      <div class="col">
-        <img src="/static/images/service2.jpg" class="service-image img-fluid" alt="Service 2">
-      </div>
-      <div class="col">
-        <img src="/static/images/service3.jpg" class="service-image img-fluid" alt="Service 3">
-      </div>
-      <div class="col">
-        <img src="/static/images/service4.jpg" class="service-image img-fluid" alt="Service 4">
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Testimonials Section -->
-<div class="py-5" style="background-color: #fdfaf6;">
+  <section id="about" class="section" style="background-color: #f9f9f9;">
   <div class="container">
-    <p class="text-center text-muted mb-2 fw-semibold" style="color: #849188;">Feedback</p>
-    <h2 class="text-center fw-bold mb-5" style="font-family: 'Georgia', serif; color: #2c4b43;">What our customers think</h2>
+    <div class="row align-items-center gx-5 gy-5">
 
+      <!-- Left Image -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="position-relative overflow-hidden rounded-4 shadow-sm" style="height: 100%; max-height: 700px;">
+          <img src="/static/images/WhatsApp Image 2025-05-16 at 5.03.23 AM.jpeg" 
+               alt="About Dawn" 
+               class="w-100 h-100 object-fit-cover rounded-4" style="object-fit: cover;">
+          <div class="position-absolute bottom-0 start-0 bg-dark text-white px-3 py-1 rounded-end shadow-sm fs-6">
+            25+ Years of Expertise
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Content -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <h2 class="fw-bold mb-3" style="color: #2c4b43;">About <span style="color: #111;">Dawn</span></h2>
+        <p class="lead text-secondary mb-4">
+          Dawn has over <strong>25+ years</strong> of experience in the hair replacement industry. She specializes in:
+        </p>
+        <ul class="list-unstyled text-secondary mb-4">
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Personalized customization & fitting</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Expert styling & natural coloring</li>
+          <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Dedicated to client confidence & comfort</li>
+        </ul>
+        <a href="#contact" class="btn btn-dark rounded-pill px-4 py-2">Book a Consultation</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section id="why-us" class="section bg-white">
+  <div class="container">
+    <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">Why Clients Choose Us</h2>
     <div class="row g-4">
-      <!-- Testimonial Card 1 -->
-      <div class="col-md-4">
-        <div class="bg-white rounded-4 shadow-sm p-4 h-100" style="border-left: 6px solid #2c4b43;">
-          <div class="text-warning mb-2 fs-5">★★★★★</div>
-          <h5 class="fw-bold mb-1" style="color: #2c4b43;">Joe</h5>
-          <p class="text-muted fw-semibold mb-2">Brows & Lashes with Homa</p>
-          <p class="mb-0 text-secondary">
-            As always Homa provided an excellent threading appointment. The atmosphere is lovely; always made to feel welcome. Highly recommend! 👍
-          </p>
+
+      <!-- Card 1 -->
+      <div class="col-md-6" data-aos="fade-up">
+        <div class="p-4 bg-light rounded shadow-sm h-100">
+          <h5 class="fw-bold text-dark mb-2"><i class="bi bi-cash-coin me-2 text-success"></i>Affordable Pricing</h5>
+          <p class="text-muted mb-0">High-quality service without high-end prices. We keep it simple and budget-friendly.</p>
         </div>
       </div>
 
-      <!-- Testimonial Card 2 -->
-      <div class="col-md-4">
-        <div class="bg-white rounded-4 shadow-sm p-4 h-100" style="border-left: 6px solid #2c4b43;">
-          <div class="text-warning mb-2 fs-5">★★★★★</div>
-          <h5 class="fw-bold mb-1" style="color: #2c4b43;">Judy</h5>
-          <p class="text-muted fw-semibold mb-2">with Hannah</p>
-          <p class="mb-0 text-secondary">
-            I would recommend HairUnit Studio to anyone looking for a quality service. The staff are super friendly and skilled.
-          </p>
+      <!-- Card 2 -->
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="p-4 bg-light rounded shadow-sm h-100">
+          <h5 class="fw-bold text-dark mb-2"><i class="bi bi-box2-heart me-2 text-primary"></i>Bring Your Own Hair Unit</h5>
+          <p class="text-muted mb-0">Already have a unit? We’ll customize, fit, and style it to match your look.</p>
         </div>
       </div>
 
-      <!-- Testimonial Card 3 -->
-      <div class="col-md-4">
-        <div class="bg-white rounded-4 shadow-sm p-4 h-100" style="border-left: 6px solid #2c4b43;">
-          <div class="text-warning mb-2 fs-5">★★★★★</div>
-          <h5 class="fw-bold mb-1" style="color: #2c4b43;">Holly</h5>
-          <p class="text-muted fw-semibold mb-2">Massage with Rosy</p>
-          <p class="mb-0 text-secondary">
-            First time trying their lava shell massage — it was magical! Super relaxing with the perfect pressure. Thank you Rosy!
-          </p>
+      <!-- Card 3 -->
+      <div class="col-md-6" data-aos="fade-up">
+        <div class="p-4 bg-light rounded shadow-sm h-100">
+          <h5 class="fw-bold text-dark mb-2"><i class="bi bi-shield-check me-2 text-warning"></i>No Contracts</h5>
+          <p class="text-muted mb-0">We offer free, private consultations with no obligations or long-term commitments.</p>
         </div>
       </div>
+
+      <!-- Card 4 -->
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="p-4 bg-light rounded shadow-sm h-100">
+          <h5 class="fw-bold text-dark mb-2"><i class="bi bi-stars me-2 text-info"></i>Full Packages Available</h5>
+          <p class="text-muted mb-0">Want everything handled for you? Choose a full hair unit with fitting and styling included.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section id="team" class="section bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">Meet the Team</h2>
+    <p class="text-center text-muted mb-5 lead">A talented team dedicated to confidence, comfort and care.</p>
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Team Member 1 -->
+      <div class="col-md-4" data-aos="fade-up">
+  <div class="card border-0 shadow-sm h-100">
+    <img src="/static/images/team/member1.jpg" class="card-img-top rounded-top" alt="Riya Sharma" style="height: 280px; object-fit: cover;">
+    <div class="card-body text-center">
+      <h5 class="fw-bold"> Dawn</h5>
+      <p class="text-muted">Owner & Lead Specialist</p>
+      <p class="text-secondary small">With over 25 years in the hair replacement business, Dawn offers personalized services to help clients look and feel their best.</p>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Team Member 2 -->
+      <div class="col-md-4" data-aos="fade-up">
+  <div class="card border-0 shadow-sm h-100">
+    <img src="/static/images/team/member2.jpg" class="card-img-top rounded-top" alt="Riya Sharma" style="height: 280px; object-fit: cover;">
+    <div class="card-body text-center">
+      <h5 class="fw-bold">Endruca</h5>
+      <p class="text-muted">Styling Consultant</p>
+      <p class="text-secondary small">Endruca brings creativity and precision to every session, specializing in seamless cuts and unit styling for both male and female clients.</p>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Team Member 3 -->
+      <div class="col-md-4" data-aos="fade-up">
+  <div class="card border-0 shadow-sm h-100">
+    <img src="/static/images/team/member3.jpg" class="card-img-top rounded-top" alt="Riya Sharma" style="height: 280px; object-fit: cover;">
+    <div class="card-body text-center">
+      <h5 class="fw-bold">Chatrain</h5>
+      <p class="text-muted">Styling Consultant</p>
+      <p class="text-secondary small">Chatrsin combines technical skill and compassion to ensure every client feels confident and cared for from consultation to final styling.</p>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+
+
+  <section id="services" class="section">
+    <div class="container-fluid px-0">
+      <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">Our Services</h2>
+      <div class="row g-0">
+        <!-- Service 1 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/1.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Hair Unit Customization</h3>
+      <p class="small mb-3">We customize your hair unit for the perfect fit, style, and natural finish. From cut to blend, every detail is handled with care.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
+    </div>
+  </div>
+</div>
+
+
+  
+        <!-- Service 2 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/2.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Styling & Blending</h3>
+      <p class="small mb-3">Professional shaping and seamless blending to match your natural look. Designed for both men and women.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
+    </div>
+  </div>
+</div>
+  
+        <!-- Service 3 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/3.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Hair Coloring</h3>
+      <p class="small mb-3">Get a perfect color match or refresh. Our gentle, salon-grade coloring techniques ensure your unit blends beautifully.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
+    </div>
+  </div>
+</div>
+  
+        <!-- Service 4 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/4.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Full Hair Unit Service</h3>
+      <p class="small mb-3">Includes a free consultation, head template, hair system selection, full installation, and finishing style — all in one.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Service 5 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/5.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Bring Your Own Unit (BYOU)</h3>
+      <p class="small mb-3">Already have a hair unit? We’ll install, cut, and style it to your exact specifications — without any pressure or contracts.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
     </div>
   </div>
 </div>
 
 
 
-  <!-- Call to Action -->
-  <div class="text-center py-5 bg-light">
-    <h4 class="mb-3">Ready to transform your look?</h4>
-    <a href="#" class="btn btn-dark btn-lg">SCHEDULE ONLINE</a>
+<!-- Service 6 -->
+        <div class="col-md-6 position-relative card-hover" data-aos="fade-up">
+  <div class="position-relative overflow-hidden rounded shadow">
+    <img src="/static/images/services/6.jpg" class="img-fluid w-100" style="height: 400px; object-fit: cover; transition: transform 0.5s ease;">
+
+    <!-- Overlay Content -->
+    <div class="position-absolute bottom-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); color: white;">
+      <h3 class="fw-bold mb-2">Hair Unit Maintenance</h3>
+      <p class="small mb-3">Adhesive cleanup, conditioning, and tune-ups to keep your unit fresh, secure, and looking great between appointments.</p>
+      <a href="#contact" class="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold">Book <span class="ms-2">➜</span></a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </section>
+  
+
+  <section id="products" class="section bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">Hair Care Products</h2>
+    <p class="text-center text-muted mb-5">Salon-quality essentials to help you protect, maintain, and refresh your hair system.</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <!-- Product Card Template -->
+      <div class="col" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/hair glue.webp" alt="Hair Glue" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Hair Glue</h5>
+          <p class="text-muted small">Strong, skin-safe adhesive designed for all-day hold without irritation.</p>
+        </div>
+      </div>
+
+      <div class="col" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/hair unit cleaner.avif" alt="Hair Unit Cleaner" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Hair Unit Cleaner</h5>
+          <p class="text-muted small">Removes glue and residue for clean reapplication.</p>
+        </div>
+      </div>
+
+      <div class="col" data-aos="zoom-in" data-aos-delay="300">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/conditioner.jpg" alt="Conditioner" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Conditioner</h5>
+          <p class="text-muted small">Restores softness and shine while protecting fibers.</p>
+        </div>
+      </div>
+
+      <div class="col" data-aos="zoom-in" data-aos-delay="400">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/shampoo.jpg" alt="Shampoo" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Shampoo</h5>
+          <p class="text-muted small">Sulfate-free gentle cleansing for sensitive scalps.</p>
+        </div>
+      </div>
+
+      <div class="col" data-aos="zoom-in" data-aos-delay="500">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/Heat Protectant Spray.jpg" alt="Heat Protectant" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Heat Protectant Spray</h5>
+          <p class="text-muted small">Shields hair from damage caused by heat styling.</p>
+        </div>
+      </div>
+
+      <div class="col" data-aos="zoom-in" data-aos-delay="600">
+        <div class="card h-100 text-center shadow-sm border-0 p-4 rounded-4 hover-shadow">
+          <div class="d-flex justify-content-center align-items-center mb-3" style="height: 140px;">
+            <img src="/static/images/products/Wide-Tooth Comb.webp" alt="Wide-Tooth Comb" class="img-fluid" style="max-height: 120px;">
+          </div>
+          <h5 class="fw-bold">Wide-Tooth Comb</h5>
+          <p class="text-muted small">Reduces shedding and keeps hair smooth & tangle-free.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+  <section id="gallery" class="section bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">Gallery</h2>
+    <div class="row g-4 gallery">
+
+      <!-- Client 1 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up">
+        <div class="overflow-hidden rounded shadow-sm">
+          <div id="client1Carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/static/images/clients/Client1/Client_FrontSide_Before.jpg" class="d-block w-100" alt="Client 1">
+                <div class="carousel-caption d-none d-md-block">
+                
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_BackSide_After.jpg" class="d-block w-100" alt="Client 1">
+                <div class="carousel-caption d-none d-md-block">
+                  
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_BackSide_Before.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_BackSideslightRightSide_After.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_CompleteLeftSide_Before.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_LeftSide_After.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_LeftSide_Before.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_RightSide_After.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_RightSide_Before.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client1/ClientA_RightSideFrontFace_After.jpg" class="d-block w-100" alt="Client 1">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#client1Carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#client1Carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <!-- Client Name -->
+    <div class="text-center mt-2">
+      <h6 class="fw-bold mt-3 text-uppercase" style="color: #2c4b43;">Client 1</h6>
+    </div>
+
+
+        </div>
+      </div>
+
+      <!-- Client 2 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="overflow-hidden rounded shadow-sm">
+          <div id="client2Carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/static/images/clients/Client2/IMG_0031.jpg" class="d-block w-100" alt="Client 2">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client2/IMG_0032.jpg" class="d-block w-100" alt="Client 2">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client2/IMG_0038.jpg" class="d-block w-100" alt="Client 2">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client2/IMG_0040.jpg" class="d-block w-100" alt="Client 2">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client2/IMG_0042.jpg" class="d-block w-100" alt="Client 2">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#client2Carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#client2Carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <!-- Client Name -->
+    <div class="text-center mt-2">
+      <h6 class="fw-bold mt-3 text-uppercase" style="color: #2c4b43;">Client 2</h6>
+    </div>
+
+        </div>
+      </div>
+
+      <!-- Client 3 -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="overflow-hidden rounded shadow-sm">
+          <div id="client3Carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/static/images/clients/Client3/IMG_0215.jpg" class="d-block w-100" alt="Client 3 Before">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client3/IMG_0216.jpg" class="d-block w-100" alt="Client 3 After">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client3/IMG_0217.jpg" class="d-block w-100" alt="Client 3 After">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client3/IMG_0218.jpg" class="d-block w-100" alt="Client 3 After">
+              </div>
+              <div class="carousel-item">
+                <img src="/static/images/clients/Client3/IMG_0219.jpg" class="d-block w-100" alt="Client 3 After">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#client3Carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#client3Carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <!-- Client Name -->
+    <div class="text-center mt-2">
+      <h6 class="fw-bold mt-3 text-uppercase" style="color: #2c4b43;">Client 3</h6>
+    </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<style>
+  .carousel-inner img {
+    height: 400px;
+    object-fit: cover;
+  }
+  .carousel-caption {
+    bottom: 10px;
+  }
+  .badge {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+</style>
+
+
+  
+  
+
+  <section id="testimonials" class="section bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5 text-uppercase fw-bold" style="color: #2c4b43;">What Our Customers Say</h2>
+      <div class="row g-4">
+        
+        <!-- Testimonial Card 1 -->
+        <div class="col-md-4">
+          <div class="bg-white testimonial shadow-sm p-4 h-100">
+            <div class="text-warning fs-5 mb-2">★★★★★</div>
+            <h5 class="fw-bold text-dark mb-1">Joe</h5>
+            <p class="text-muted mb-2">Brows & Lashes with Homa</p>
+            <p class="text-secondary mb-0">
+              As always, Homa provided an excellent threading appointment. The atmosphere is lovely; always made to feel welcome. Highly recommend! 👍
+            </p>
+          </div>
+        </div>
+  
+        <!-- Testimonial Card 2 -->
+        <div class="col-md-4">
+          <div class="bg-white testimonial shadow-sm p-4 h-100">
+            <div class="text-warning fs-5 mb-2">★★★★★</div>
+            <h5 class="fw-bold text-dark mb-1">Judy</h5>
+            <p class="text-muted mb-2">Hair Unit with Hannah</p>
+            <p class="text-secondary mb-0">
+              I would recommend HairUnit Studio to anyone looking for a quality service. The staff are super friendly and skilled.
+            </p>
+          </div>
+        </div>
+  
+        <!-- Testimonial Card 3 -->
+        <div class="col-md-4">
+          <div class="bg-white testimonial shadow-sm p-4 h-100">
+            <div class="text-warning fs-5 mb-2">★★★★★</div>
+            <h5 class="fw-bold text-dark mb-1">Holly</h5>
+            <p class="text-muted mb-2">Massage with Rosy</p>
+            <p class="text-secondary mb-0">
+              First time trying their lava shell massage — it was magical! Super relaxing with the perfect pressure. Thank you Rosy!
+            </p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="text-center mb-4 text-uppercase fw-bold" style="color: #2c4b43;">Contact</h2>
+      <div class="row">
+        
+        
+        <div class="row">
+  <!-- Contact Details -->
+  <div class="col-md-6 mb-4 mb-md-0">
+    <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+      <h5 class="fw-bold mb-4" style="color: #2c4b43;">Get In Touch</h5>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-3 d-flex align-items-start">
+          <i class="bi bi-telephone-fill text-dark me-3 fs-5"></i>
+          <span><strong>Phone:</strong> <br> <a href="tel:4695730388" class="text-muted text-decoration-none">469-573-0388</a></span>
+        </li>
+        <li class="mb-3 d-flex align-items-start">
+          <i class="bi bi-envelope-fill text-dark me-3 fs-5"></i>
+          <span><strong>Email:</strong> <br> <a href="mailto:dawnhairsaloon@gmail.com" class="text-muted text-decoration-none">dawnhairsaloon@gmail.com</a></span>
+        </li>
+        <li class="mb-3 d-flex align-items-start">
+          <i class="bi bi-geo-alt-fill text-dark me-3 fs-5"></i>
+          <span><strong>Address:</strong> <br> <span class="text-muted">1122 Preston Rd, Dallas, TX 75254</span></span>
+        </li>
+        <li class="mb-2 d-flex align-items-start">
+          <i class="bi bi-clock-fill text-dark me-3 fs-5"></i>
+          <span>
+            <strong>Operating Hours:</strong><br>
+            <span class="text-muted">Tuesday – Friday: 9:00 AM – 5:30 PM</span><br>
+            <span class="text-muted">Saturday: 9:00 AM – 1:00 PM</span><br>
+            <span class="text-muted">Sunday & Monday: Closed</span>
+          </span>
+        </li>
+      </ul>
+      <hr class="my-4">
+
+<h6 class="fw-bold mb-3" style="color: #2c4b43;">Follow Us</h6>
+<div class="d-flex flex-column gap-2">
+
+  <a href="https://www.instagram.com/dawnseloon" target="_blank" class="text-dark text-decoration-none d-flex align-items-center">
+    <i class="bi bi-instagram me-2 fs-5 text-danger"></i>
+    @dawnseloon
+  </a>
+
+  <a href="https://www.facebook.com/DawnHairSaloon" target="_blank" class="text-dark text-decoration-none d-flex align-items-center">
+    <i class="bi bi-facebook me-2 fs-5 text-primary"></i>
+    Dawn Hair Saloon
+  </a>
+
+</div>
+
+
+    </div>
   </div>
 
+  <!-- Google Map Embed -->
+  <div class="col-md-6">
+    <div class="rounded-4 shadow-sm overflow-hidden h-100">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3348.469601224827!2d-96.80558978446625!3d32.93772558092847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c20f61c6500b3%3A0x6c008c5a2d02ac6!2s1122%20Preston%20Rd%2C%20Dallas%2C%20TX%2075254%2C%20USA!5e0!3m2!1sen!2sin!4v1715774086111!5m2!1sen!2sin"
+        width="100%" 
+        height="100%" 
+        style="min-height: 400px; border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+  
+      </div>
+    </div>
+  </section>
+  
+
+  <footer>
+    <p class="mb-0">© 2025 HairUnit Studio. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
   <script>
     window.addEventListener("scroll", function () {
-      const nav = document.querySelector("nav");
-      if (window.scrollY > 50) {
-        nav.classList.add("bg-white", "shadow");
-      } else {
-        nav.classList.remove("bg-white", "shadow");
-      }
+      const nav = document.querySelector(".navbar");
+      nav.classList.toggle("scrolled", window.scrollY > 50);
     });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+</script>
+
 </body>
 </html>
